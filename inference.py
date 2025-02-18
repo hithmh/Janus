@@ -32,12 +32,19 @@ vl_gpt: MultiModalityCausalLM = AutoModelForCausalLM.from_pretrained(
     model_path, trust_remote_code=True
 )
 vl_gpt = vl_gpt.to(torch.bfloat16).cuda().eval()
-
+for param in vl_gpt.parameters():
+    param.requires_grad = False
+name_list = []
+# Set requires_grad to True for the parameters you want to finetune
+for name, param in vl_gpt.named_parameters():
+    name_list.append(name)
+    # if "layer_name" in name:  # Replace "layer_name" with the actual layer name you want to finetune
+    #     param.requires_grad = True
 conversation = [
     {
         "role": "User",
         "content": "<image_placeholder>\nConvert the formula into latex code.",
-        "images": ["images/equation.png"],
+        "images": ["images/image-283.png"],
     },
     {"role": "Assistant", "content": ""},
 ]
