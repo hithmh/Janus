@@ -218,6 +218,7 @@ class MultiModalityCausalLM(MultiModalityPreTrainedModel):
         language_config = config.language_config
         self.language_model = LlamaForCausalLM(language_config)
 
+
     def prepare_inputs_embeds(
         self,
         input_ids: torch.LongTensor,
